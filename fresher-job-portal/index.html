@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FreshHire – Fresher Job Online Portal</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="#" class="logo">Fresh<span>Hire</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#jobs">Browse Jobs</a></li>
+        <li><a href="#companies">Companies</a></li>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="#about">About</a></li>
+        <li id="navMyApps" style="display:none"><a href="#myApplications" class="nav-my-apps">📋 My Applications</a></li>
+      </ul>
+      <div class="nav-actions" id="navActions">
+        <button class="btn btn-ghost" onclick="openModal('loginModal')">Login</button>
+        <button class="btn btn-primary" onclick="openModal('registerModal')">Register Free</button>
+      </div>
+      <div class="nav-actions nav-logged-in" id="navLoggedIn" style="display:none">
+        <span class="user-greeting" id="userGreeting">👋 Hi, User</span>
+        <button class="btn btn-ghost" onclick="handleLogout()">Logout</button>
+      </div>
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-shapes">
+      <div class="shape s1"></div>
+      <div class="shape s2"></div>
+      <div class="shape s3"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-badge">🎓 #1 Platform for Freshers in India</div>
+      <h1 class="hero-title">Launch Your <span class="highlight">Career</span><br>The Right Way</h1>
+      <p class="hero-sub">Connect with 5,000+ companies actively hiring freshers. Zero experience? No problem.</p>
+
+      <div class="search-box">
+        <div class="search-field">
+          <i class="icon">🔍</i>
+          <input type="text" id="searchInput" placeholder="Job title, skill, or company..." oninput="filterJobs()">
+        </div>
+        <div class="search-field">
+          <i class="icon">📍</i>
+          <select id="locationFilter" onchange="filterJobs()">
+            <option value="">All Locations</option>
+            <option value="Bangalore">Bangalore</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Hyderabad">Hyderabad</option>
+            <option value="Pune">Pune</option>
+            <option value="Chennai">Chennai</option>
+            <option value="Remote">Remote</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <i class="icon">💼</i>
+          <select id="typeFilter" onchange="filterJobs()">
+            <option value="">All Types</option>
+            <option value="Full-Time">Full-Time</option>
+            <option value="Internship">Internship</option>
+            <option value="Part-Time">Part-Time</option>
+            <option value="Remote">Remote</option>
+          </select>
+        </div>
+        <button class="btn btn-search" onclick="filterJobs()">Search Jobs</button>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat"><strong>12,400+</strong><span>Live Jobs</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><strong>5,200+</strong><span>Companies</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><strong>89,000+</strong><span>Placements</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><strong>4.8★</strong><span>Rating</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="categories" id="categories">
+    <div class="container">
+      <div class="section-header">
+        <h2>Browse by Category</h2>
+        <p>Find opportunities in your field of study</p>
+      </div>
+      <div class="cat-grid">
+        <div class="cat-card" onclick="filterByCategory('Software')">
+          <div class="cat-icon">💻</div>
+          <h4>Software & IT</h4>
+          <span>3,240 jobs</span>
+        </div>
+        <div class="cat-card" onclick="filterByCategory('Marketing')">
+          <div class="cat-icon">📣</div>
+          <h4>Marketing & Sales</h4>
+          <span>1,820 jobs</span>
+        </div>
+        <div class="cat-card" onclick="filterByCategory('Finance')">
+          <div class="cat-icon">💰</div>
+          <h4>Finance & Banking</h4>
+          <span>980 jobs</span>
+        </div>
+        <div class="cat-card" onclick="filterByCategory('Design')">
+          <div class="cat-icon">🎨</div>
+          <h4>Design & Creative</h4>
+          <span>760 jobs</span>
+        </div>
+        <div class="cat-card" onclick="filterByCategory('HR')">
+          <div class="cat-icon">🤝</div>
+          <h4>HR & Management</h4>
+          <span>540 jobs</span>
+        </div>
+        <div class="cat-card" onclick="filterByCategory('Data')">
+          <div class="cat-icon">📊</div>
+          <h4>Data & Analytics</h4>
+          <span>1,100 jobs</span>
+        </div>
+        <div class="cat-card" onclick="filterByCategory('Engineering')">
+          <div class="cat-icon">⚙️</div>
+          <h4>Core Engineering</h4>
+          <span>870 jobs</span>
+        </div>
+        <div class="cat-card" onclick="filterByCategory('Content')">
+          <div class="cat-icon">✍️</div>
+          <h4>Content & Media</h4>
+          <span>430 jobs</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOB LISTINGS -->
+  <section class="jobs-section" id="jobs">
+    <div class="container">
+      <div class="section-header">
+        <h2>Latest Job Openings</h2>
+        <p>Updated daily — freshers preferred</p>
+      </div>
+
+      <div class="filter-bar">
+        <div class="filter-chips" id="filterChips">
+          <button class="chip active" onclick="setActive(this,'all')">All Jobs</button>
+          <button class="chip" onclick="setActive(this,'Full-Time')">Full-Time</button>
+          <button class="chip" onclick="setActive(this,'Internship')">Internship</button>
+          <button class="chip" onclick="setActive(this,'Remote')">Remote</button>
+          <button class="chip" onclick="setActive(this,'Part-Time')">Part-Time</button>
+        </div>
+        <div class="sort-box">
+          <label>Sort by:</label>
+          <select onchange="sortJobs(this.value)">
+            <option value="newest">Newest First</option>
+            <option value="salary">Highest Salary</option>
+            <option value="company">Company A-Z</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="jobs-grid" id="jobsGrid">
+        <!-- Jobs rendered by JS -->
+      </div>
+
+      <div class="no-jobs" id="noJobs" style="display:none;">
+        <div class="no-jobs-icon">🔍</div>
+        <h3>No jobs found</h3>
+        <p>Try adjusting your search filters</p>
+      </div>
+
+      <div class="load-more">
+        <button class="btn btn-outline" onclick="loadMore()">Load More Jobs</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPANIES -->
+  <section class="companies" id="companies">
+    <div class="container">
+      <div class="section-header">
+        <h2>Top Hiring Companies</h2>
+        <p>Leading companies actively recruiting freshers</p>
+      </div>
+      <div class="company-grid">
+        <div class="company-card">
+          <div class="co-logo" style="background:#e8f4fd;color:#1a73e8">G</div>
+          <h4>Google India</h4>
+          <p>240 openings</p>
+          <span class="co-tag">Tech Giant</span>
+        </div>
+        <div class="company-card">
+          <div class="co-logo" style="background:#fff3e0;color:#f57c00">TCS</div>
+          <h4>TCS</h4>
+          <p>1,240 openings</p>
+          <span class="co-tag">IT Services</span>
+        </div>
+        <div class="company-card">
+          <div class="co-logo" style="background:#e8f5e9;color:#2e7d32">In</div>
+          <h4>Infosys</h4>
+          <p>860 openings</p>
+          <span class="co-tag">IT Services</span>
+        </div>
+        <div class="company-card">
+          <div class="co-logo" style="background:#fce4ec;color:#c62828">Fl</div>
+          <h4>Flipkart</h4>
+          <p>310 openings</p>
+          <span class="co-tag">E-Commerce</span>
+        </div>
+        <div class="company-card">
+          <div class="co-logo" style="background:#ede7f6;color:#512da8">Wi</div>
+          <h4>Wipro</h4>
+          <p>920 openings</p>
+          <span class="co-tag">IT Services</span>
+        </div>
+        <div class="company-card">
+          <div class="co-logo" style="background:#e3f2fd;color:#1565c0">Az</div>
+          <h4>Amazon India</h4>
+          <p>480 openings</p>
+          <span class="co-tag">E-Commerce</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works" id="about">
+    <div class="container">
+      <div class="section-header">
+        <h2>How FreshHire Works</h2>
+        <p>Get hired in 4 simple steps</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <div class="step-icon">📝</div>
+          <h4>Create Your Profile</h4>
+          <p>Sign up and fill your academic details, skills, and career preferences in minutes.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <div class="step-icon">🔍</div>
+          <h4>Explore Opportunities</h4>
+          <p>Browse thousands of fresher-friendly jobs filtered by role, location, and salary.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <div class="step-icon">📤</div>
+          <h4>Apply with One Click</h4>
+          <p>Submit your application instantly. Track status in real-time from your dashboard.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">04</div>
+          <div class="step-icon">🎉</div>
+          <h4>Get Hired!</h4>
+          <p>Receive interview calls, attend, and land your dream first job with confidence.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MY APPLICATIONS (visible when logged in) -->
+  <section class="my-applications" id="myApplications" style="display:none">
+    <div class="container">
+      <div class="section-header">
+        <h2>📋 My Applications</h2>
+        <p>Track the status of your job applications in real-time</p>
+      </div>
+      <div id="myAppsGrid" class="my-apps-grid"></div>
+      <div id="noMyApps" class="no-jobs" style="display:none;">
+        <div class="no-jobs-icon">📭</div>
+        <h3>No applications yet</h3>
+        <p>Browse jobs above and apply to get started!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="#" class="logo logo-white">Fresh<span>Hire</span></a>
+        <p>Empowering freshers to find their first dream job. Built with passion for new graduates.</p>
+      </div>
+      <div class="footer-links">
+        <h5>For Candidates</h5>
+        <ul>
+          <li><a href="#">Browse Jobs</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h5>For Employers</h5>
+        <ul>
+          <li><a href="#">Search Resumes</a></li>
+          <li><a href="#">Campus Hiring</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 FreshHire. All rights reserved. Made for freshers, by freshers.</p>
+    </div>
+  </footer>
+
+  <!-- ===== MODALS ===== -->
+
+  <!-- Job Detail Modal -->
+  <div class="modal-overlay" id="jobModal" onclick="closeModal('jobModal')">
+    <div class="modal large" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('jobModal')">✕</button>
+      <div id="jobModalContent"></div>
+    </div>
+  </div>
+
+  <!-- Apply Modal -->
+  <div class="modal-overlay" id="applyModal" onclick="closeModal('applyModal')">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('applyModal')">✕</button>
+      <form autocomplete="off" onsubmit="return false;">
+      <h2 class="modal-title">Apply for <span id="applyJobTitle">this job</span></h2>
+      <p class="modal-sub">Fill in your details and submit your application</p>
+      <div class="form-group">
+        <label>Full Name *</label>
+        <input type="text" placeholder="e.g. Rahul Sharma" id="appName">
+      </div>
+      <div class="form-group">
+        <label>Email Address *</label>
+        <input type="email" placeholder="rahul@email.com" id="appEmail">
+      </div>
+      <div class="form-group">
+        <label>Phone Number *</label>
+        <input type="tel" placeholder="+91 98765 43210" id="appPhone">
+      </div>
+      <div class="form-group">
+        <label>Degree / Qualification *</label>
+        <input type="text" placeholder="e.g. B.Tech Computer Science, 2024" id="appDegree">
+      </div>
+      <div class="form-group">
+        <label>Skills (comma separated)</label>
+        <input type="text" placeholder="e.g. Java, HTML, CSS, Python" id="appSkills">
+      </div>
+      <div class="form-group">
+        <label>Cover Letter</label>
+        <textarea placeholder="Tell the employer why you're a great fit..." rows="4" id="appCover"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Upload Resume (PDF)</label>
+        <div class="file-upload-box">
+          <span>📎 Click to upload or drag & drop</span>
+          <input type="file" accept=".pdf,.doc,.docx" onchange="handleFileUpload(this)">
+        </div>
+        <div id="fileNameDisplay" style="margin-top:6px;font-size:13px;color:#10b981;display:none;"></div>
+      </div>
+      <button class="btn btn-primary btn-full" onclick="submitApplication()">Submit Application 🚀</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div class="modal-overlay" id="loginModal" onclick="closeModal('loginModal')">
+    <div class="modal small" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('loginModal')">✕</button>
+      <form autocomplete="off" onsubmit="return false;">
+      <h2 class="modal-title">Welcome Back!</h2>
+      <p class="modal-sub">Login to access your dashboard</p>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="you@email.com" id="loginEmail">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" placeholder="Enter your password" id="loginPassword">
+      </div>
+      <div class="form-row">
+        <label class="checkbox-label"><input type="checkbox"> Remember me</label>
+        <a href="#" class="forgot-link">Forgot password?</a>
+      </div>
+      <button class="btn btn-primary btn-full" onclick="handleLogin()">Login</button>
+      <p class="switch-auth">Don't have an account? <a onclick="switchModal('loginModal','registerModal')">Register
+          here</a></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div class="modal-overlay" id="registerModal" onclick="closeModal('registerModal')">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('registerModal')">✕</button>
+      <form autocomplete="off" onsubmit="return false;">
+      <h2 class="modal-title">Join FreshHire</h2>
+      <p class="modal-sub">Create your free account and start applying</p>
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="Rahul" id="regFirstName">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Sharma" id="regLastName">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="rahul@email.com" id="regEmail">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" placeholder="Create a strong password" id="regPassword">
+      </div>
+      <div class="form-group">
+        <label>I am a...</label>
+        <select id="regRole">
+          <option>Fresher / Recent Graduate</option>
+          <option>Final Year Student</option>
+          <option>Employer / HR</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>College / University</label>
+        <input type="text" placeholder="e.g. IIT Delhi, VIT, Pune University" id="regCollege">
+      </div>
+      <label class="checkbox-label" style="margin-bottom:16px"><input type="checkbox"> I agree to the Terms & Privacy
+        Policy</label>
+      <button class="btn btn-primary btn-full" onclick="handleRegister()">Create My Account</button>
+      <p class="switch-auth">Already have an account? <a onclick="switchModal('registerModal','loginModal')">Login
+          here</a></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
